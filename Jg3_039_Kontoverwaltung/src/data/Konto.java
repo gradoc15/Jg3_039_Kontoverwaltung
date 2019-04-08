@@ -15,4 +15,21 @@ public class Konto
 {
     private int amount;
     private ArrayList<KontoBenutzer> user = new ArrayList();
+
+    public Konto()
+    {
+        amount = 50;
+    }
+    
+    public void withdraw()
+    {
+
+    }
+    
+    public void deposit()
+    {
+        
+    }
+    
+    
 }

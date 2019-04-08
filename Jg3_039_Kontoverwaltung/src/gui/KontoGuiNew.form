@@ -12,6 +12,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="add user"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addUser"/>
+          </Events>
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="miPerformAccountTest">
           <Properties>

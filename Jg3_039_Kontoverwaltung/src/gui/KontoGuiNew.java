@@ -6,6 +6,8 @@
 package gui;
 
 import data.Konto;
+import data.KontoBenutzer;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,6 +15,7 @@ import data.Konto;
  */
 public class KontoGuiNew extends javax.swing.JFrame
 {
+    private Konto konto;
 
     public KontoGuiNew()
     {
@@ -44,6 +47,13 @@ public class KontoGuiNew extends javax.swing.JFrame
         taDisplay = new javax.swing.JTextArea();
 
         miAddUser.setText("add user");
+        miAddUser.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                addUser(evt);
+            }
+        });
         jPopupMenu1.add(miAddUser);
 
         miPerformAccountTest.setText("perform account test");
@@ -102,9 +112,14 @@ public class KontoGuiNew extends javax.swing.JFrame
 
     private void newKonto(java.awt.event.ActionEvent evt)//GEN-FIRST:event_newKonto
     {//GEN-HEADEREND:event_newKonto
-        Konto k = new Konto();
-        liUser.setModel(k);
+        konto = new Konto();
+        liUser.setModel(konto);
     }//GEN-LAST:event_newKonto
+
+    private void addUser(java.awt.event.ActionEvent evt)//GEN-FIRST:event_addUser
+    {//GEN-HEADEREND:event_addUser
+        konto.addUser(new KontoBenutzer(JOptionPane.showInputDialog("Username: ")));
+    }//GEN-LAST:event_addUser
 
     /**
      * @param args the command line arguments

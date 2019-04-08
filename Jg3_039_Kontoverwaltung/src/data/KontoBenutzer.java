@@ -11,5 +11,17 @@ package data;
  */
 public class KontoBenutzer
 {
+    private String name = "";
+
+    public KontoBenutzer(String name)
+    {
+        this.name = name;
+    }
+    
+    public String toString()
+    {
+        return name;
+    }
+    
     
 }

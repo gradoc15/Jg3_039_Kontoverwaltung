@@ -5,11 +5,20 @@
  */
 package gui;
 
+import java.awt.Component;
+import javax.swing.JList;
+
 /**
  *
  * @author User
  */
-public class ListCellRenderer
+public class ListCellRenderer implements javax.swing.ListCellRenderer
 {
+
+    @Override
+    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

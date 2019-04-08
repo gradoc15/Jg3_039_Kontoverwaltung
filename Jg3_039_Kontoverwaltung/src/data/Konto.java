@@ -6,12 +6,13 @@
 package data;
 
 import java.util.ArrayList;
+import javax.swing.AbstractListModel;
 
 /**
  *
  * @author User
  */
-public class Konto
+public class Konto extends AbstractListModel<KontoBenutzer>
 {
     private int amount;
     private ArrayList<KontoBenutzer> user = new ArrayList();
@@ -21,15 +22,38 @@ public class Konto
         amount = 50;
     }
     
-    public void withdraw()
+    public void addUser(KontoBenutzer u)
     {
+        user.add(u);
+        fireIntervalAdded(this, user.size()-1, user.size()-1);
+    }
+    
+    public void deleteUser(KontoBenutzer u)
+    {
+        user.remove(u);
+        fireIntervalRemoved(this, user.size()-1, user.size()-1);
+    }
+    
+    public void withdraw(int amount)
+    {
+        this.amount -= amount;
+    }
+    
+    public void deposit(int diff)
+    {
+        this.amount -= diff;
+    }
 
-    }
-    
-    public void deposit()
+    @Override
+    public int getSize()
     {
-        
+        return user.size();
     }
-    
+
+    @Override
+    public KontoBenutzer getElementAt(int index)
+    {
+        return user.get(index);
+    }
     
 }

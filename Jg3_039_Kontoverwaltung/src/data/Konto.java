@@ -14,7 +14,7 @@ import javax.swing.AbstractListModel;
  */
 public class Konto extends AbstractListModel<KontoBenutzer>
 {
-    private int amount;
+    private double amount;
     private ArrayList<KontoBenutzer> user = new ArrayList();
 
     public Konto()
@@ -34,12 +34,12 @@ public class Konto extends AbstractListModel<KontoBenutzer>
         fireIntervalRemoved(this, user.size()-1, user.size()-1);
     }
     
-    public void withdraw(int amount)
+    public void withdraw(double amount)
     {
         this.amount -= amount;
     }
     
-    public void deposit(int diff)
+    public void deposit(double diff)
     {
         this.amount -= diff;
     }
@@ -55,5 +55,19 @@ public class Konto extends AbstractListModel<KontoBenutzer>
     {
         return user.get(index);
     }
+
+    public double getAmount()
+    {
+        return amount;
+    }
+
+    public ArrayList<KontoBenutzer> getUser()
+    {
+        return user;
+    }
+    
+    
+    
+    
     
 }

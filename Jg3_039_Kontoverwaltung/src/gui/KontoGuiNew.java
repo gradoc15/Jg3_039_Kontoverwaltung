@@ -20,6 +20,7 @@ public class KontoGuiNew extends javax.swing.JFrame
     public KontoGuiNew()
     {
         initComponents();
+ 
     }
 
     /**
@@ -57,6 +58,13 @@ public class KontoGuiNew extends javax.swing.JFrame
         jPopupMenu1.add(miAddUser);
 
         miPerformAccountTest.setText("perform account test");
+        miPerformAccountTest.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                miPerformAccountTestActionPerformed(evt);
+            }
+        });
         jPopupMenu1.add(miPerformAccountTest);
 
         miNewKonto.setText("new Konto");
@@ -72,14 +80,17 @@ public class KontoGuiNew extends javax.swing.JFrame
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Account", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel1.setToolTipText("");
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        lbAmount.setText("jLabel1");
+        lbAmount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbAmount.setText("       ");
         jPanel1.add(lbAmount, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "User", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel2.setMaximumSize(new java.awt.Dimension(47, 153));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         liUser.setModel(new javax.swing.AbstractListModel()
@@ -98,6 +109,7 @@ public class KontoGuiNew extends javax.swing.JFrame
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Log-output", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
         jPanel3.setLayout(new java.awt.BorderLayout());
 
+        taDisplay.setEditable(false);
         taDisplay.setColumns(20);
         taDisplay.setRows(5);
         taDisplay.setComponentPopupMenu(jPopupMenu2);
@@ -114,13 +126,29 @@ public class KontoGuiNew extends javax.swing.JFrame
     {//GEN-HEADEREND:event_newKonto
         konto = new Konto();
         liUser.setModel(konto);
+        upateAmount();
     }//GEN-LAST:event_newKonto
 
     private void addUser(java.awt.event.ActionEvent evt)//GEN-FIRST:event_addUser
     {//GEN-HEADEREND:event_addUser
-        konto.addUser(new KontoBenutzer(JOptionPane.showInputDialog("Username: ")));
+        konto.addUser(new KontoBenutzer(JOptionPane.showInputDialog("Username: "),konto,taDisplay));
     }//GEN-LAST:event_addUser
 
+    private void miPerformAccountTestActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_miPerformAccountTestActionPerformed
+    {//GEN-HEADEREND:event_miPerformAccountTestActionPerformed
+        for(KontoBenutzer user : konto.getUser())
+        {
+            Thread t = new Thread(user);
+            t.setName(user.getName());
+            t.start();
+        }
+    }//GEN-LAST:event_miPerformAccountTestActionPerformed
+
+    public void upateAmount()
+    {
+        lbAmount.setText(String.format("%.2f Euro",konto.getAmount()));
+        taDisplay.append("Created new Konto\n");
+    }
     /**
      * @param args the command line arguments
      */

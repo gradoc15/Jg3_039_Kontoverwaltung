@@ -30,6 +30,9 @@ public class KontoGuiNew extends javax.swing.JFrame
     private void initComponents()
     {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        miAddUser = new javax.swing.JMenuItem();
+        miPerformAccountTest = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         lbAmount = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -39,8 +42,15 @@ public class KontoGuiNew extends javax.swing.JFrame
         jScrollPane2 = new javax.swing.JScrollPane();
         taDisplay = new javax.swing.JTextArea();
 
+        miAddUser.setText("add user");
+        jPopupMenu1.add(miAddUser);
+
+        miPerformAccountTest.setText("perform account test");
+        jPopupMenu1.add(miPerformAccountTest);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Account", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         lbAmount.setText("jLabel1");
@@ -48,6 +58,7 @@ public class KontoGuiNew extends javax.swing.JFrame
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "User", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         liUser.setModel(new javax.swing.AbstractListModel<String>()
@@ -56,12 +67,14 @@ public class KontoGuiNew extends javax.swing.JFrame
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        liUser.setComponentPopupMenu(jPopupMenu1);
         jScrollPane1.setViewportView(liUser);
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_START);
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Log-output", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
         jPanel3.setLayout(new java.awt.BorderLayout());
 
         taDisplay.setColumns(20);
@@ -124,10 +137,13 @@ public class KontoGuiNew extends javax.swing.JFrame
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbAmount;
     private javax.swing.JList<String> liUser;
+    private javax.swing.JMenuItem miAddUser;
+    private javax.swing.JMenuItem miPerformAccountTest;
     private javax.swing.JTextArea taDisplay;
     // End of variables declaration//GEN-END:variables
 }

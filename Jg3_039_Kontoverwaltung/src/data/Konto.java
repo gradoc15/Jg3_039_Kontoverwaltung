@@ -5,11 +5,14 @@
  */
 package data;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author User
  */
 public class Konto
 {
-    
+    private int amount;
+    private ArrayList<KontoBenutzer> user = new ArrayList();
 }

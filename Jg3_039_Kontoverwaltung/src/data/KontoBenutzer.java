@@ -24,7 +24,7 @@ public class KontoBenutzer extends Thread
     private Konto k;
     private JTextArea display;
 
-    public KontoBenutzer(String name, Konto k, JTextArea display, gui.ThreadState st)
+    public KontoBenutzer(String name, Konto k, JTextArea display)
     {
         this.name = name;
         this.k = k;
@@ -99,7 +99,10 @@ public class KontoBenutzer extends Thread
         display.append(currentThread().getName()+" has finished");
     }
     
-    
+    public void setThreadState(gui.ThreadState st)
+    {
+        this.st = st;
+    }
     
     public String toString()
     {

@@ -155,20 +155,22 @@ public class KontoGui extends javax.swing.JFrame implements obs.Observer
     private void addUser(java.awt.event.ActionEvent evt)//GEN-FIRST:event_addUser
     {//GEN-HEADEREND:event_addUser
         String name = JOptionPane.showInputDialog("Username: ");
-        ThreadState st = new ThreadState(name);
-        tsList.add(st);
-        KontoBenutzer u = new KontoBenutzer(name,konto,taDisplay,st);
+        
+        KontoBenutzer u = new KontoBenutzer(name,konto,taDisplay);
         konto.addUser(u);
     }//GEN-LAST:event_addUser
 
     private void miPerformAccountTestActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_miPerformAccountTestActionPerformed
     {//GEN-HEADEREND:event_miPerformAccountTestActionPerformed
         
-
-        if(tsList.size() > 3)
+        for(int i : liUser.getSelectedIndices())
         {
-            frame.setLayout(new GridLayout(tsList.size()%3 == 0 ? tsList.size()/3 : tsList.size()/3+1, 3));
+            ThreadState st = new ThreadState(konto.getUserAt(i).getUsername());
+            tsList.add(st);
+            konto.getUserAt(i).setThreadState(st);
         }
+        if(tsList.size() > 3)
+            frame.setLayout(new GridLayout(tsList.size()%3 == 0 ? tsList.size()/3 : tsList.size()/3+1, 3));
         else
             frame.setLayout(new GridLayout(1, tsList.size()));
         
@@ -181,9 +183,9 @@ public class KontoGui extends javax.swing.JFrame implements obs.Observer
         frame.setSize(600,400);
         frame.setVisible(true);
         
-        for(KontoBenutzer user : konto.getUser())
+        for(int i: liUser.getSelectedIndices())
         {
-            Thread t = new Thread(user,user.getUsername());
+            Thread t = new Thread(konto.getUserAt(i),konto.getUserAt(i).getUsername());
             t.setPriority(Thread.currentThread().getPriority()+1);
             threads.add(t);
             t.start();

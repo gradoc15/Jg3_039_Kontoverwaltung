@@ -48,6 +48,11 @@ public class Konto extends AbstractListModel<KontoBenutzer> implements obs.Subje
         this.amount += amount;
         inform();
     }
+    
+    public KontoBenutzer getUserAt(int idx)
+    {
+        return user.get(idx);
+    }
 
     @Override
     public int getSize()

@@ -7,17 +7,20 @@ package gui;
 
 import data.Konto;
 import data.KontoBenutzer;
+import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author User
  */
-public class KontoGuiNew extends javax.swing.JFrame implements obs.Observer
+public class KontoGui extends javax.swing.JFrame implements obs.Observer
 {
     private Konto konto = new Konto();
+    
+    private LinkedList<Thread> threads = new LinkedList();
 
-    public KontoGuiNew()
+    public KontoGui()
     {
         initComponents();
  
@@ -128,6 +131,16 @@ public class KontoGuiNew extends javax.swing.JFrame implements obs.Observer
         taDisplay.append("Created new Konto\n");
         liUser.setModel(konto);
         konto.register(this);
+        
+        if(threads.size() > 0)
+        {
+            for(Thread t : threads)
+            {
+                t.stop();
+            }
+            
+            taDisplay.append("Terminated all old unused Threads\n");
+        }
         update();
     }//GEN-LAST:event_newKonto
 
@@ -140,10 +153,13 @@ public class KontoGuiNew extends javax.swing.JFrame implements obs.Observer
 
     private void miPerformAccountTestActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_miPerformAccountTestActionPerformed
     {//GEN-HEADEREND:event_miPerformAccountTestActionPerformed
+        
+        
         for(KontoBenutzer user : konto.getUser())
         {
             Thread t = new Thread(user,user.getUsername());
-            
+            t.setPriority(Thread.currentThread().getPriority()+1);
+            threads.add(t);
             t.start();
         }
     }//GEN-LAST:event_miPerformAccountTestActionPerformed
@@ -170,17 +186,18 @@ public class KontoGuiNew extends javax.swing.JFrame implements obs.Observer
             }
         } catch (ClassNotFoundException ex)
         {
-            java.util.logging.Logger.getLogger(KontoGuiNew.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(KontoGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex)
         {
-            java.util.logging.Logger.getLogger(KontoGuiNew.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(KontoGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex)
         {
-            java.util.logging.Logger.getLogger(KontoGuiNew.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(KontoGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex)
         {
-            java.util.logging.Logger.getLogger(KontoGuiNew.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(KontoGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -188,7 +205,7 @@ public class KontoGuiNew extends javax.swing.JFrame implements obs.Observer
         {
             public void run()
             {
-                new KontoGuiNew().setVisible(true);
+                new KontoGui().setVisible(true);
             }
         });
     }

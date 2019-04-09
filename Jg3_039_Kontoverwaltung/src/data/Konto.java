@@ -42,9 +42,9 @@ public class Konto extends AbstractListModel<KontoBenutzer> implements obs.Subje
         inform();
     }
     
-    public void deposit(double diff)
+    public void deposit(double amount)
     {
-        this.amount -= diff;
+        this.amount += amount;
         inform();
     }
 

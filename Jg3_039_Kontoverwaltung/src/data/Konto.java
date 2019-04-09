@@ -7,15 +7,17 @@ package data;
 
 import java.util.ArrayList;
 import javax.swing.AbstractListModel;
+import obs.Observer;
 
 /**
  *
  * @author User
  */
-public class Konto extends AbstractListModel<KontoBenutzer>
+public class Konto extends AbstractListModel<KontoBenutzer> implements obs.Subject
 {
     private double amount;
     private ArrayList<KontoBenutzer> user = new ArrayList();
+    private ArrayList<Observer> obs = new ArrayList();
 
     public Konto()
     {
@@ -37,11 +39,13 @@ public class Konto extends AbstractListModel<KontoBenutzer>
     public void withdraw(double amount)
     {
         this.amount -= amount;
+        inform();
     }
     
     public void deposit(double diff)
     {
         this.amount -= diff;
+        inform();
     }
 
     @Override
@@ -64,6 +68,28 @@ public class Konto extends AbstractListModel<KontoBenutzer>
     public ArrayList<KontoBenutzer> getUser()
     {
         return user;
+    }
+
+    @Override
+    public void register(Observer obs)
+    {
+        this.obs.add(obs);
+    }
+
+    @Override
+    public void deregister(Observer obs)
+    {
+        this.obs.remove(obs);
+    }
+
+    @Override
+    public void inform()
+    {
+        for(Observer o: obs)
+        {
+            System.out.println("Inform");
+            o.update();
+        }
     }
     
     

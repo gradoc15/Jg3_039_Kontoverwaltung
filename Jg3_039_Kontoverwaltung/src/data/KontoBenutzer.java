@@ -28,6 +28,11 @@ public class KontoBenutzer extends Thread
         this.k = k;
         this.display = display;
     }
+    
+    public String getUsername()
+    {
+        return name;
+    }
 
     @Override
     public void run()
@@ -57,7 +62,6 @@ public class KontoBenutzer extends Thread
                     {
                         if(amount > k.getAmount())
                             try {
-                                System.out.println("Wants to wait");
                                 k.wait();
                                 i--;
                                 continue;

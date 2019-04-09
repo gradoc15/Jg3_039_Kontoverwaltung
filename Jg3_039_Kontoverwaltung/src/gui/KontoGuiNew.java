@@ -13,9 +13,9 @@ import javax.swing.JOptionPane;
  *
  * @author User
  */
-public class KontoGuiNew extends javax.swing.JFrame
+public class KontoGuiNew extends javax.swing.JFrame implements obs.Observer
 {
-    private Konto konto;
+    private Konto konto = new Konto();
 
     public KontoGuiNew()
     {
@@ -125,30 +125,29 @@ public class KontoGuiNew extends javax.swing.JFrame
     private void newKonto(java.awt.event.ActionEvent evt)//GEN-FIRST:event_newKonto
     {//GEN-HEADEREND:event_newKonto
         konto = new Konto();
+        taDisplay.append("Created new Konto\n");
         liUser.setModel(konto);
-        upateAmount();
+        konto.register(this);
+        update();
     }//GEN-LAST:event_newKonto
 
     private void addUser(java.awt.event.ActionEvent evt)//GEN-FIRST:event_addUser
     {//GEN-HEADEREND:event_addUser
-        konto.addUser(new KontoBenutzer(JOptionPane.showInputDialog("Username: "),konto,taDisplay));
+        String name = JOptionPane.showInputDialog("Username: ");
+        KontoBenutzer u = new KontoBenutzer(name,konto,taDisplay);
+        konto.addUser(u);
     }//GEN-LAST:event_addUser
 
     private void miPerformAccountTestActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_miPerformAccountTestActionPerformed
     {//GEN-HEADEREND:event_miPerformAccountTestActionPerformed
         for(KontoBenutzer user : konto.getUser())
         {
-            Thread t = new Thread(user);
-            t.setName(user.getName());
+            Thread t = new Thread(user,user.getUsername());
+            
             t.start();
         }
     }//GEN-LAST:event_miPerformAccountTestActionPerformed
 
-    public void upateAmount()
-    {
-        lbAmount.setText(String.format("%.2f Euro",konto.getAmount()));
-        taDisplay.append("Created new Konto\n");
-    }
     /**
      * @param args the command line arguments
      */
@@ -209,4 +208,10 @@ public class KontoGuiNew extends javax.swing.JFrame
     private javax.swing.JMenuItem miPerformAccountTest;
     private javax.swing.JTextArea taDisplay;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update()
+    {
+        lbAmount.setText(String.format("%.2f Euro",konto.getAmount()));
+    }
 }

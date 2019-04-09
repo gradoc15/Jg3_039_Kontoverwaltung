@@ -16,6 +16,7 @@ import obs.Observer;
 public class Konto extends AbstractListModel<KontoBenutzer> implements obs.Subject
 {
     private double amount;
+    
     private ArrayList<KontoBenutzer> user = new ArrayList();
     private ArrayList<Observer> obs = new ArrayList();
 

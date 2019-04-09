@@ -18,15 +18,18 @@ public class KontoBenutzer extends Thread
 {
     Random rand = new Random();
     
+    private gui.ThreadState st;
+    
     private String name = "";
     private Konto k;
     private JTextArea display;
 
-    public KontoBenutzer(String name, Konto k, JTextArea display)
+    public KontoBenutzer(String name, Konto k, JTextArea display, gui.ThreadState st)
     {
         this.name = name;
         this.k = k;
         this.display = display;
+        this.st = st;
     }
     
     public String getUsername()
@@ -37,18 +40,22 @@ public class KontoBenutzer extends Thread
     @Override
     public void run()
     {
+        
         int amount = -1;
         
         for(int i = 0; i < 10; i++)
         {
+            st.setThreadRunning();
             System.out.println("in");
-//            try
-//            {
-//                Thread.sleep(rand.nextInt(1000)+1);
-//            } catch (InterruptedException ex)
-//            {
-//                Logger.getLogger(KontoBenutzer.class.getName()).log(Level.SEVERE, null, ex);
-//            }
+            try
+            {
+                st.setThreadSleeping();
+                Thread.sleep(rand.nextInt(1000)+1);
+                st.setThreadRunning();
+            } catch (InterruptedException ex)
+            {
+                Logger.getLogger(KontoBenutzer.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
                if(amount == -1)
                     amount =  rand.nextInt(51)+10;
@@ -62,6 +69,7 @@ public class KontoBenutzer extends Thread
                     {
                         if(amount > k.getAmount())
                             try {
+                                st.setThreadWaiting();
                                 k.wait();
                                 i--;
                                 continue;

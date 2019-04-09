@@ -7,7 +7,9 @@ package gui;
 
 import data.Konto;
 import data.KontoBenutzer;
+import java.awt.GridLayout;
 import java.util.LinkedList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,6 +21,8 @@ public class KontoGui extends javax.swing.JFrame implements obs.Observer
     private Konto konto = new Konto();
     
     private LinkedList<Thread> threads = new LinkedList();
+    private LinkedList<ThreadState> tsList = new LinkedList();
+    private JFrame frame = new JFrame();
 
     public KontoGui()
     {
@@ -134,6 +138,10 @@ public class KontoGui extends javax.swing.JFrame implements obs.Observer
         
         if(threads.size() > 0)
         {
+            
+            frame.setVisible(false);
+            frame.removeAll();  
+        
             for(Thread t : threads)
             {
                 t.stop();
@@ -147,13 +155,31 @@ public class KontoGui extends javax.swing.JFrame implements obs.Observer
     private void addUser(java.awt.event.ActionEvent evt)//GEN-FIRST:event_addUser
     {//GEN-HEADEREND:event_addUser
         String name = JOptionPane.showInputDialog("Username: ");
-        KontoBenutzer u = new KontoBenutzer(name,konto,taDisplay);
+        ThreadState st = new ThreadState(name);
+        tsList.add(st);
+        KontoBenutzer u = new KontoBenutzer(name,konto,taDisplay,st);
         konto.addUser(u);
     }//GEN-LAST:event_addUser
 
     private void miPerformAccountTestActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_miPerformAccountTestActionPerformed
     {//GEN-HEADEREND:event_miPerformAccountTestActionPerformed
         
+
+        if(tsList.size() > 3)
+        {
+            frame.setLayout(new GridLayout(tsList.size()%3 == 0 ? tsList.size()/3 : tsList.size()/3+1, 3));
+        }
+        else
+            frame.setLayout(new GridLayout(1, tsList.size()));
+        
+        for(ThreadState st: tsList)
+        {
+            frame.add(st);
+            System.out.println("add");
+        }
+        
+        frame.setSize(600,400);
+        frame.setVisible(true);
         
         for(KontoBenutzer user : konto.getUser())
         {

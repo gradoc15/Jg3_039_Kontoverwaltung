@@ -1,4 +1,0 @@
-## YAML Template.
-language: java
-java: 8.2
-script: junit

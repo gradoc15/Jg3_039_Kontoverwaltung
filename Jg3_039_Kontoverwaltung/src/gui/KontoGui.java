@@ -100,12 +100,6 @@ public class KontoGui extends javax.swing.JFrame implements obs.Observer
         jPanel2.setMaximumSize(new java.awt.Dimension(47, 153));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
-        liUser.setModel(new javax.swing.AbstractListModel()
-        {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         liUser.setComponentPopupMenu(jPopupMenu1);
         jScrollPane1.setViewportView(liUser);
 

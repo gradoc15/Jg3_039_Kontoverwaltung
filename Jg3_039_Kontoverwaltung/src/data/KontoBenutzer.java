@@ -96,6 +96,7 @@ public class KontoBenutzer extends Thread
                     
                 }
         }
+        st.setThreadFinished();
         display.append(currentThread().getName()+" has finished");
     }
     

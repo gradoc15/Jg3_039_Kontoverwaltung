@@ -22,7 +22,7 @@ public class KontoGui extends javax.swing.JFrame implements obs.Observer
     
     private LinkedList<Thread> threads = new LinkedList();
     private LinkedList<ThreadState> tsList = new LinkedList();
-    private JFrame frame = new JFrame();
+    private LinkedList<JFrame> frames = new LinkedList();
 
     public KontoGui()
     {
@@ -162,6 +162,13 @@ public class KontoGui extends javax.swing.JFrame implements obs.Observer
     private void miPerformAccountTestActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_miPerformAccountTestActionPerformed
     {//GEN-HEADEREND:event_miPerformAccountTestActionPerformed
         
+        JFrame frame = new JFrame();
+        
+        for(JFrame f : frames)
+        {
+            if(f.isVisible())
+                f.setVisible(false);
+        }
         for(int i : liUser.getSelectedIndices())
         {
             ThreadState st = new ThreadState(konto.getUserAt(i).getUsername());
@@ -179,6 +186,7 @@ public class KontoGui extends javax.swing.JFrame implements obs.Observer
             System.out.println("add");
         }
         
+        frames.add(frame)
         frame.setSize(600,400);
         frame.setVisible(true);
         
@@ -268,8 +276,12 @@ public class KontoGui extends javax.swing.JFrame implements obs.Observer
     
     public void killThreads()
     {
-        frame.setVisible(false);
-        frame.removeAll();
+        for(JFrame f : frames)
+        {
+            f.setVisible(false);
+        }
+        
+        frames.clear();
 
         for (Thread t : threads)
         {

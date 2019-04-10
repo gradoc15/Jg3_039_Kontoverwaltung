@@ -43,6 +43,7 @@ public class KontoGui extends javax.swing.JFrame implements obs.Observer
         jPopupMenu1 = new javax.swing.JPopupMenu();
         miAddUser = new javax.swing.JMenuItem();
         miPerformAccountTest = new javax.swing.JMenuItem();
+        miKillUserThreads = new javax.swing.JMenuItem();
         jPopupMenu2 = new javax.swing.JPopupMenu();
         miNewKonto = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
@@ -73,6 +74,16 @@ public class KontoGui extends javax.swing.JFrame implements obs.Observer
             }
         });
         jPopupMenu1.add(miPerformAccountTest);
+
+        miKillUserThreads.setText("Kill User-Threads");
+        miKillUserThreads.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                miKillUserThreadsActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(miKillUserThreads);
 
         miNewKonto.setText("new Konto");
         miNewKonto.addActionListener(new java.awt.event.ActionListener()
@@ -133,13 +144,7 @@ public class KontoGui extends javax.swing.JFrame implements obs.Observer
         if(threads.size() > 0)
         {
             
-            frame.setVisible(false);
-            frame.removeAll();  
-        
-            for(Thread t : threads)
-            {
-                t.stop();
-            }
+            killThreads();
             
             taDisplay.append("Terminated all old unused Threads\n");
         }
@@ -185,6 +190,12 @@ public class KontoGui extends javax.swing.JFrame implements obs.Observer
             t.start();
         }
     }//GEN-LAST:event_miPerformAccountTestActionPerformed
+
+    private void miKillUserThreadsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_miKillUserThreadsActionPerformed
+    {//GEN-HEADEREND:event_miKillUserThreadsActionPerformed
+        killThreads();
+        taDisplay.append("Killed all User-Threads\n");
+    }//GEN-LAST:event_miKillUserThreadsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -243,6 +254,7 @@ public class KontoGui extends javax.swing.JFrame implements obs.Observer
     private javax.swing.JLabel lbAmount;
     private javax.swing.JList liUser;
     private javax.swing.JMenuItem miAddUser;
+    private javax.swing.JMenuItem miKillUserThreads;
     private javax.swing.JMenuItem miNewKonto;
     private javax.swing.JMenuItem miPerformAccountTest;
     private javax.swing.JTextArea taDisplay;
@@ -252,5 +264,16 @@ public class KontoGui extends javax.swing.JFrame implements obs.Observer
     public void update()
     {
         lbAmount.setText(String.format("%.2f Euro",konto.getAmount()));
+    }
+    
+    public void killThreads()
+    {
+        frame.setVisible(false);
+        frame.removeAll();
+
+        for (Thread t : threads)
+        {
+            t.stop();
+        }
     }
 }

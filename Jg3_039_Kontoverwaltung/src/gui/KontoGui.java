@@ -186,7 +186,7 @@ public class KontoGui extends javax.swing.JFrame implements obs.Observer
             System.out.println("add");
         }
         
-        frames.add(frame)
+        frames.add(frame);
         frame.setSize(600,400);
         frame.setVisible(true);
         

@@ -25,6 +25,7 @@ public class Konto extends AbstractListModel<KontoBenutzer> implements obs.Subje
         amount = 50;
     }
     
+    
     public void addUser(KontoBenutzer u)
     {
         user.add(u);
